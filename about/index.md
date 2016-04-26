@@ -5,7 +5,8 @@ tags: [about, ryan, john, dean]
 date: 2016-03-21
 ---
 
-<center>I'm a software developer and student from Baltimore, Maryland. Shoot me an email for a formal resume.</center>
+<center>I'm a software developer and student from Baltimore, Maryland.
+Shoot me an email for a formal resume.</center>
 
 ## Education
 * I'm currently working on my undergrad at the University of Virginia. I expect to graduate in May, 2018 with a double major in Computer Science and Economics.
@@ -30,4 +31,4 @@ date: 2016-03-21
 	* Python:
 		* A Twitter hashtag tracking and sentiment analysis tool (work-in-progress)
 	* Some simple apps and utilities using Swift for iOS, Ruby on Rails, and node.js with Express
-* For more details on some of these projects and a couple more, check out the <a href="../projects.html">projects page</p> on this site, or my github.
+* For more details on some of these projects and a couple more, check out the <a href="../projects/">projects page</a> on this site, or my github.
