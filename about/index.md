@@ -11,10 +11,10 @@ date: 2016-03-21
 * I'm currently working on my undergrad at the University of Virginia. I expect to graduate in May, 2018 with a double major in Computer Science and Economics.
 
 ## Relevant Professional Exeperience
-* <bold>United States Department of Defense | Software Development Intern</bold> | May 2015 - August 2015
+* United States Department of Defense | Software Development Intern | May 2015 - August 2015
 	* Developed and optimized a Java Spring application to automate the analysis of web content
 	* Tailored and deployed a web application to assist the planning and management of work-related travel
-* <bold>Varen Technologies | Security Intern</bold> | 2012 - 2014
+* Varen Technologies | Security Intern | 2012 - 2014
 	* Digitally archived a large physical database of documents
 
 ## Other Relevant Experience
