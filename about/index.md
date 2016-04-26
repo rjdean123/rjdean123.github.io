@@ -24,6 +24,6 @@ date: 2016-03-21
 	* A Google Cardboard virtual reality game
   * A GIMP command-line clone written in C++
   * A command-line ray tracer written in C++
-	* A Twitter hashtag tracking tool using Python
-	* Some simple apps and utilities using iOS, Ruby on Rails, and node.js with Express
+  * A Twitter hashtag tracking tool using Python
+  * Some simple apps and utilities using iOS, Ruby on Rails, and node.js with Express
 * For more details on some of these projects and a couple more, check out the projects page on this site, or my github.
