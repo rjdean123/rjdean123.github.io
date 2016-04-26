@@ -17,4 +17,6 @@
 	* A Google cardboard virtual reality game
 	* A Twitter hashtag tracking tool using Python
 	* Some simple apps and utilities using iOS, Ruby on Rails, and node.js with Express
-* For some more detail on some of these projects and a couple more, check out the projects page on this site, or my github.
+* For more details on some of these projects and a couple more, check out the projects page on this site, or my github.
+
+Theme Credit: Moon by taylantatli

@@ -4,9 +4,7 @@ title: About Ryan
 tags: [about, ryan, john, dean]
 date: 2016-03-21
 ---
-    
 <center>I'm a software developer and student from Baltimore, Maryland.</center>
-
 ## Education
 * I'm currently working on my undergrad at the University of Virginia. I expect to graduate in May, 2018 with a double major in Computer Science and Economics.
 
@@ -21,7 +19,7 @@ date: 2016-03-21
 * Aside from school and work, I'm usually working on a project of some sort on the side to sharpen my skills and/or make useful things. Examples include:
 	* An Android application that scraped grades off of my high school's grade reporting website for easier mobile digestion
 	* An Android background service that pauses the music in my headphones when someone in the vicinity addresses me by name
-	* A Google cardboard virtual reality game
+	* A Google Cardboard virtual reality game
 	* A Twitter hashtag tracking tool using Python
 	* Some simple apps and utilities using iOS, Ruby on Rails, and node.js with Express
-* For some more detail on some of these projects and a couple more, check out the projects page on this site, or my github.
+* For more details on some of these projects and a couple more, check out the projects page on this site, or my github.
