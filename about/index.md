@@ -6,6 +6,7 @@ date: 2016-03-21
 ---
 
 <center>I'm a software developer and student from Baltimore, Maryland.
+
 Shoot me an email for a formal resume.</center>
 
 ## Education
