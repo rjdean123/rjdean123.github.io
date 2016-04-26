@@ -11,4 +11,6 @@ tag:
 comments: false
 ---
 
-hello world
+<a href="../cardboardgame/index.html">
+	Test it out here.
+</a>
