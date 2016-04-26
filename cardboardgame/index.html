@@ -32,10 +32,11 @@
     var element, container;
 
     var orbs = new THREE.Object3D();
-    var activeOrbCount = 1000;
-    var orbSize = 10;
-    var maxOrbStartDist = 1000;
-    var minOrbStartDist = orbSize*4;
+    var activeOrbCount = 1;
+    var orbSize = 50;
+    var maxOrbStartDist = 700;
+    var minOrbStartDist = 600;
+    var orbSpeed = 1;
 
     var clock = new THREE.Clock();
 
@@ -112,6 +113,8 @@
 
       window.addEventListener('resize', resize, false);
       setTimeout(resize, 1);
+
+      animate();
     }
 
     function initializeOrbs() {
@@ -162,11 +165,34 @@
       effect.render(scene, camera);
     }
 
-    function animate(t) {
+    function animate() {
+
+      var delta = clock.getElapsedTime();
+
+      // update positions
+      for (var i = 0; i < activeOrbCount; i++) {
+
+        var dist = camera.position.clone().sub(orbs.children[i].position);
+
+        if (dist.length() < orbSize*.2)
+          die();
+
+        var move = dist.normalize().multiplyScalar(orbSpeed);
+
+        orbs.children[i].position.x += move.x;
+        orbs.children[i].position.y += move.y;
+        orbs.children[i].position.z += move.z;
+      }
+
       requestAnimationFrame(animate);
 
       update(clock.getDelta());
       render(clock.getDelta());
+    }
+
+    function die() {
+
+      //console.log("dead");
     }
 
     function fullscreen() {
