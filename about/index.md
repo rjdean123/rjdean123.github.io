@@ -1,7 +1,7 @@
 ---
 layout: page
 title: About Ryan
-tags: [about, Jekyll, theme, moon]
+tags: [about, ryan, john, dean]
 date: 2016-03-21
 ---
     
