@@ -4,7 +4,9 @@ title: About Ryan
 tags: [about, ryan, john, dean]
 date: 2016-03-21
 ---
+
 <center>I'm a software developer and student from Baltimore, Maryland.</center>
+
 ## Education
 * I'm currently working on my undergrad at the University of Virginia. I expect to graduate in May, 2018 with a double major in Computer Science and Economics.
 
