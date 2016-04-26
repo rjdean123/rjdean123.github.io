@@ -32,11 +32,17 @@
     var element, container;
 
     var orbs = new THREE.Object3D();
-    var activeOrbCount = 1;
+    var startingOrbCount = 1;
     var orbSize = 50;
     var maxOrbStartDist = 700;
     var minOrbStartDist = 600;
     var orbSpeed = 1;
+
+    var bullets = new THREE.Object3D();
+    var bulletSize = 5;
+    var bulletMaxDist = 700;
+    var bulletSpeed = 2;
+    var bulletDirection = [];
 
     var clock = new THREE.Clock();
 
@@ -82,6 +88,8 @@
       }
       window.addEventListener('deviceorientation', setOrientationControls, true);
 
+      window.addEventListener('click', shoot, true);
+
 
       var light = new THREE.HemisphereLight(0x777777, 0x000000, 0.6);
       scene.add(light);
@@ -110,6 +118,7 @@
 
       // setup initial target orbs
       initializeOrbs();
+      scene.add(bullets);
 
       window.addEventListener('resize', resize, false);
       setTimeout(resize, 1);
@@ -125,7 +134,7 @@
           color: 0xffffff
         });
 
-      for (var i = 0; i < activeOrbCount; i++) {
+      for (var i = 0; i < startingOrbCount; i++) {
 
           var sprite = new THREE.Sprite(spriteMaterial);
 
@@ -140,6 +149,32 @@
       }
 
       scene.add(orbs);
+    }
+
+    function shoot() {
+
+      var bulletTexture = THREE.ImageUtils.loadTexture('textures/objects/orb.png'),
+        spriteMaterial = new THREE.SpriteMaterial({
+          map: bulletTexture,
+          color: 0xffffff
+        });
+
+      var sprite = new THREE.Sprite(spriteMaterial);
+      sprite.scale.set(bulletSize, bulletSize, bulletSize);
+      sprite.position.x = camera.position.x;
+      sprite.position.y = camera.position.y;
+      sprite.position.z = camera.position.z;
+
+      var pLocal = new THREE.Vector3(0, 0, -1);
+      var pWorld = pLocal.applyMatrix4(camera.matrixWorld);
+      var dir = pWorld.sub(camera.position).normalize();
+
+      bulletDirection.push(dir);
+
+      sprite.material.blending = THREE.AdditiveBlending;
+
+      bullets.add(sprite);
+      scene.add(bullets);
     }
 
     function resize() {
@@ -169,19 +204,40 @@
 
       var delta = clock.getElapsedTime();
 
-      // update positions
-      for (var i = 0; i < activeOrbCount; i++) {
+      // update positions of orbs
+      for (var i = 0; i < orbs.children.length; i++) {
 
         var dist = camera.position.clone().sub(orbs.children[i].position);
 
-        if (dist.length() < orbSize*.2)
+        if (dist.length() < orbSize*.2) {
+          orbs.children.splice(i, 1);
           die();
+        } else {
 
-        var move = dist.normalize().multiplyScalar(orbSpeed);
+          var move = dist.normalize().multiplyScalar(orbSpeed);
 
-        orbs.children[i].position.x += move.x;
-        orbs.children[i].position.y += move.y;
-        orbs.children[i].position.z += move.z;
+          orbs.children[i].position.x += move.x;
+          orbs.children[i].position.y += move.y;
+          orbs.children[i].position.z += move.z;
+        }
+      }
+
+      // update positions of bullets
+      for (var i = 0; i < bullets.children.length; i++) {
+
+        var move = bulletDirection[i];//.multiplyScalar(bulletSpeed);
+
+        bullets.children[i].position.x += move.x;
+        bullets.children[i].position.y += move.y;
+        bullets.children[i].position.z += move.z;
+
+        // remove out of bounds bullets
+        if (bullets.children[i].position.x > bulletMaxDist || bullets.children[i].position.y > bulletMaxDist || bullets.children[i].position.x > bulletMaxDist || bullets.children[i].position.y < 0) {
+
+          bullets.children.splice(i, 1);
+          bulletDirection.splice(i, 1);
+        }
+
       }
 
       requestAnimationFrame(animate);
@@ -192,7 +248,7 @@
 
     function die() {
 
-      //console.log("dead");
+      console.log("you're dead");
     }
 
     function fullscreen() {
