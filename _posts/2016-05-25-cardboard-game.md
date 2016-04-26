@@ -15,9 +15,7 @@ comments: false
 	Check out the code here.
 </a>
 
-</br>
 OR
-</br>
 
 <a href="../cardboardgame/index.html">
 	Test it out here.
