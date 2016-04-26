@@ -11,10 +11,10 @@
 	* Digitally archived a large physical database of documents
 
 ## Other Relevant Experience
-Aside from school and work, I'm usually working on a project of some sort on the side to sharpen my skills and/or make useful things. Examples include:
-* An Android application that scraped grades off of my high school's grade reporting website for easier mobile digestion
-* An Android background service that pauses the music in my headphones when someone in the vicinity addresses me by name
-* A Google cardboard virtual reality game
-* A Twitter hashtag tracking tool using Python
-* Some simple apps and utilities using iOS, Ruby on Rails, and node.js with Express
-For some more detail on some of these projects and a couple more, check out the projects page on this site, or my github.
+* Aside from school and work, I'm usually working on a project of some sort on the side to sharpen my skills and/or make useful things. Examples include:
+	* An Android application that scraped grades off of my high school's grade reporting website for easier mobile digestion
+	* An Android background service that pauses the music in my headphones when someone in the vicinity addresses me by name
+	* A Google cardboard virtual reality game
+	* A Twitter hashtag tracking tool using Python
+	* Some simple apps and utilities using iOS, Ruby on Rails, and node.js with Express
+* For some more detail on some of these projects and a couple more, check out the projects page on this site, or my github.
