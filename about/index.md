@@ -25,9 +25,9 @@ date: 2016-03-21
 	* C++:
 		* A GIMP command-line clone
 		* A command-line ray tracer
-	*Javascript:
+	* Javascript:
 		* A Google Cardboard virtual reality game
-	*Python:
+	* Python:
 		* A Twitter hashtag tracking and sentiment analysis tool (work-in-progress)
 	* Some simple apps and utilities using Swift for iOS, Ruby on Rails, and node.js with Express
 * For more details on some of these projects and a couple more, check out the projects page on this site, or my github.
