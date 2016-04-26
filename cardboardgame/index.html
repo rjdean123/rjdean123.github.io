@@ -15,11 +15,28 @@
         left: 0;
         right: 0;
         bottom: 0;
+        z-index: 0;
+      }
+      #HUDlives {
+        position: absolute;
+        z-index: 1;
+        background-color: red;
+        color: white;
+      }
+      #HUDscore {
+        position: absolute;
+        z-index: 1;
+        background-color: green;
+        color: white;
       }
     </style>
   </head>
   <body>
-    <div id="example"></div>
+  <div id="example"></div>
+
+  <div id="HUDlives"><b>LIVES:</b> 3</div>
+  <br/>
+  <div id="HUDscore"><b>SCORE:</b> 0</div>
 
   <script src="js/third-party/threejs/three.js"></script>
   <script src="js/third-party/threejs/StereoEffect.js"></script>
@@ -30,6 +47,7 @@
     var camera, scene, renderer;
     var effect, controls;
     var element, container;
+    var frame = 0;
 
     var orbs = new THREE.Object3D();
     var startingOrbCount = 1;
@@ -37,11 +55,12 @@
     var maxOrbStartDist = 700;
     var minOrbStartDist = 600;
     var orbSpeed = 1;
+    var orbFreq = 1000;
 
     var bullets = new THREE.Object3D();
     var bulletSize = 5;
     var bulletMaxDist = 700;
-    var bulletSpeed = 2;
+    var bulletSpeed = 1;
     var bulletDirection = [];
 
     var clock = new THREE.Clock();
@@ -202,7 +221,11 @@
 
     function animate() {
 
-      var delta = clock.getElapsedTime();
+      frame++;
+
+      var totalTime = clock.getElapsedTime();
+
+      addNewOrbs(totalTime);
 
       // update positions of orbs
       for (var i = 0; i < orbs.children.length; i++) {
@@ -211,7 +234,7 @@
 
         if (dist.length() < orbSize*.2) {
           orbs.children.splice(i, 1);
-          die();
+          hit();
         } else {
 
           var move = dist.normalize().multiplyScalar(orbSpeed);
@@ -225,7 +248,7 @@
       // update positions of bullets
       for (var i = 0; i < bullets.children.length; i++) {
 
-        var move = bulletDirection[i];//.multiplyScalar(bulletSpeed);
+        var move = bulletDirection[i]//.multiplyScalar(bulletSpeed);
 
         bullets.children[i].position.x += move.x;
         bullets.children[i].position.y += move.y;
@@ -240,15 +263,44 @@
 
       }
 
+      // check for bullet - 
+
       requestAnimationFrame(animate);
 
       update(clock.getDelta());
       render(clock.getDelta());
     }
 
-    function die() {
+    function addNewOrbs() {
 
-      console.log("you're dead");
+      // add new orb if appropriate
+      if (frame % (orbFreq) == 0) {
+
+        console.log(frame);
+
+        var orbTexture = THREE.ImageUtils.loadTexture('textures/objects/orb.png'),
+        spriteMaterial = new THREE.SpriteMaterial({
+          map: orbTexture,
+          color: 0xffffff
+        });
+
+        var sprite = new THREE.Sprite(spriteMaterial);
+
+        sprite.scale.set(orbSize, orbSize, orbSize);
+        sprite.position.set((2*maxOrbStartDist * Math.random()) - maxOrbStartDist + minOrbStartDist, 
+                              maxOrbStartDist * Math.random() + minOrbStartDist,
+                            (2*maxOrbStartDist * Math.random()) - maxOrbStartDist + minOrbStartDist);
+
+        sprite.material.blending = THREE.AdditiveBlending;
+
+        orbs.add(sprite);
+        scene.add(orbs);
+      }
+    }
+
+    function hit() {
+
+      console.log("you've been hit");
     }
 
     function fullscreen() {
