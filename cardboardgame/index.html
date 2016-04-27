@@ -264,6 +264,19 @@
       }
 
       // check for bullet - orb collisions
+      for (var i = 0; i < orbs.children.length; i++) {
+        for (var j = 0; j < bullets.children.length; j++) {
+
+          var dist = orbs.children[i].position.clone().sub(bullets.children[j].position);
+
+          // bullseye
+          if (dist.length() < (orbSize + bulletSize)) {
+            orbs.children.splice(i, 1);
+            bullets.children.splice(j, 1);
+            bulletDirection.splice(j, 1);
+          }
+        }
+      }
 
       requestAnimationFrame(animate);
 
@@ -276,6 +289,8 @@
       // add new orb if appropriate
       if (frame % (orbFreq) == 0) {
 
+        orbFreq -= 20;
+
         var orbTexture = THREE.ImageUtils.loadTexture('textures/objects/orb.png'),
         spriteMaterial = new THREE.SpriteMaterial({
           map: orbTexture,
@@ -286,19 +301,15 @@
 
         sprite.scale.set(orbSize, orbSize, orbSize);
         sprite.position.set((2*maxOrbStartDist * Math.random()) - maxOrbStartDist, 
-                              maxOrbStartDist * Math.random(),
+                              (maxOrbStartDist+200) * Math.random(),
                             (2*maxOrbStartDist * Math.random()) - maxOrbStartDist);
 
         if (sprite.position.x < 0)
           sprite.position.x -= minOrbStartDist;
-        if (sprite.position.y < 0)
-          sprite.position.y -= minOrbStartDist;
         if (sprite.position.z < 0)
           sprite.position.z -= minOrbStartDist;
         if (sprite.position.x > 0)
           sprite.position.x += minOrbStartDist;
-        if (sprite.position.y > 0)
-          sprite.position.y += minOrbStartDist;
         if (sprite.position.z > 0)
           sprite.position.z += minOrbStartDist;
 
