@@ -28,4 +28,4 @@ OR
 
 #### To win:
 
-![Monster Image](../cardboardgame/textures/objects/alien.png)
+![Monster Image](../cardboardgame/textures/objects/alien.png =250x)
