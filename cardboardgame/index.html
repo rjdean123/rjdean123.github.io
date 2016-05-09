@@ -19,24 +19,29 @@
       }
       #HUDlives {
         position: absolute;
+        top: 100px;
+        left: 50px;
         z-index: 1;
         background-color: red;
         color: white;
+        font-size: 20pt;
+        vertical-align: middle;
       }
       #HUDscore {
         position: absolute;
+        top: 130px;
+        left: 50px;
         z-index: 1;
         background-color: green;
         color: white;
+        font-size: 20pt;
       }
     </style>
   </head>
+  <div id="HUDlives"><b>LIVES:</b> 3 </div>
+  <div id="HUDscore"><b>SCORE:</b> 0</div>
   <body>
   <div id="example"></div>
-
-  <div id="HUDlives"><b>LIVES:</b> 3 </div>
-  <br/>
-  <div id="HUDscore"><b>SCORE:</b> 0</div>
 
   <script src="js/third-party/threejs/three.js"></script>
   <script src="js/third-party/threejs/StereoEffect.js"></script>
@@ -48,6 +53,11 @@
     var effect, controls;
     var element, container;
     var frame = 0;
+
+    var lives = 3;
+    var score = 0;
+    var startScreen = true;
+    var dead = false;
 
     var orbs = new THREE.Object3D();
     var startingOrbCount = 1;
@@ -66,10 +76,10 @@
     var clock = new THREE.Clock();
 
     init();
-    animate();
-
+    
     function init() {
       renderer = new THREE.WebGLRenderer();
+      renderer.setClearColor( 0x00FF3C ); // universe color (background color)
       element = renderer.domElement;
       container = document.getElementById('example');
       container.appendChild(element);
@@ -86,7 +96,7 @@
       controls.rotateUp(Math.PI / 4);
       controls.target.set(
         camera.position.x + 0.1,
-        camera.position.y,
+        camera.position.y+.5,
         camera.position.z
       );
       controls.noZoom = true;
@@ -172,6 +182,14 @@
 
     function shoot() {
 
+      if (startScreen) {
+
+        startScreen = false;
+        renderer.setClearColor( 0x000000 );
+        animate();
+        return;
+      }
+
       var bulletTexture = THREE.ImageUtils.loadTexture('textures/objects/orb.png'),
         spriteMaterial = new THREE.SpriteMaterial({
           map: bulletTexture,
@@ -221,61 +239,66 @@
 
     function animate() {
 
-      frame++;
+      if (!startScreen) {
+        frame++;
 
-      var totalTime = clock.getElapsedTime();
+        var totalTime = clock.getElapsedTime();
 
-      addNewOrbs(totalTime);
+        addNewOrbs(totalTime);
 
-      // update positions of orbs
-      for (var i = 0; i < orbs.children.length; i++) {
+        // update positions of orbs
+        for (var i = 0; i < orbs.children.length; i++) {
 
-        var dist = camera.position.clone().sub(orbs.children[i].position);
+          var dist = camera.position.clone().sub(orbs.children[i].position);
 
-        if (dist.length() < orbSize*.2) {
-          orbs.children.splice(i, 1);
-          hit();
-        } else {
-
-          var move = dist.normalize().multiplyScalar(orbSpeed);
-
-          orbs.children[i].position.x += move.x;
-          orbs.children[i].position.y += move.y;
-          orbs.children[i].position.z += move.z;
-        }
-      }
-
-      // update positions of bullets
-      for (var i = 0; i < bullets.children.length; i++) {
-
-        var move = bulletDirection[i]//.multiplyScalar(bulletSpeed);
-
-        bullets.children[i].position.x += move.x;
-        bullets.children[i].position.y += move.y;
-        bullets.children[i].position.z += move.z;
-
-        // remove out of bounds bullets
-        if (bullets.children[i].position.x > bulletMaxDist || bullets.children[i].position.y > bulletMaxDist || bullets.children[i].position.x > bulletMaxDist || bullets.children[i].position.y < 0) {
-
-          bullets.children.splice(i, 1);
-          bulletDirection.splice(i, 1);
-        }
-
-      }
-
-      // check for bullet - orb collisions
-      for (var i = 0; i < orbs.children.length; i++) {
-        for (var j = 0; j < bullets.children.length; j++) {
-
-          var dist = orbs.children[i].position.clone().sub(bullets.children[j].position);
-
-          // bullseye
-          if (dist.length() < (orbSize/2 + bulletSize)) {
+          if (dist.length() < orbSize*.2) {
             orbs.children.splice(i, 1);
-            bullets.children.splice(j, 1);
-            bulletDirection.splice(j, 1);
+            hit();
+          } else {
+
+            var move = dist.normalize().multiplyScalar(orbSpeed);
+
+            orbs.children[i].position.x += move.x;
+            orbs.children[i].position.y += move.y;
+            orbs.children[i].position.z += move.z;
           }
         }
+
+        // update positions of bullets
+        for (var i = 0; i < bullets.children.length; i++) {
+
+          var move = bulletDirection[i]//.multiplyScalar(bulletSpeed);
+
+          bullets.children[i].position.x += move.x;
+          bullets.children[i].position.y += move.y;
+          bullets.children[i].position.z += move.z;
+
+          // remove out of bounds bullets
+          if (bullets.children[i].position.x > bulletMaxDist || bullets.children[i].position.y > bulletMaxDist || bullets.children[i].position.x > bulletMaxDist || bullets.children[i].position.y < 0) {
+
+            bullets.children.splice(i, 1);
+            bulletDirection.splice(i, 1);
+          }
+
+        }
+
+        // check for bullet - orb collisions
+        for (var i = 0; i < orbs.children.length; i++) {
+          for (var j = 0; j < bullets.children.length; j++) {
+
+            var dist = orbs.children[i].position.clone().sub(bullets.children[j].position);
+
+            // bullseye
+            if (dist.length() < (orbSize/2 + bulletSize)) {
+              orbs.children.splice(i, 1);
+              bullets.children.splice(j, 1);
+              bulletDirection.splice(j, 1);
+              score++;
+              document.getElementById("HUDscore").innerHTML = "SCORE: " + score;
+            }
+          }
+        }
+        
       }
 
       requestAnimationFrame(animate);
@@ -290,9 +313,7 @@
       if (frame % (orbFreq) == 0) {
 
         if (orbFreq > 200)
-          orbFreq -= 10;
-
-        console.log(orbFreq);
+          orbFreq -= 20;
 
         var orbTexture = THREE.ImageUtils.loadTexture('textures/objects/alien.png'),
         spriteMaterial = new THREE.SpriteMaterial({
@@ -325,7 +346,17 @@
 
     function hit() {
 
-      console.log("you've been hit");
+      lives--;
+      document.getElementById("HUDlives").innerHTML = "LIVES: " + lives;
+      if (lives <= 0)
+        gameOver();
+    }
+
+    function gameOver() {
+
+      orbFreq = 0;
+      renderer.setClearColor( 0xFF0000 )
+      console.log("game over");
     }
 
     function fullscreen() {
