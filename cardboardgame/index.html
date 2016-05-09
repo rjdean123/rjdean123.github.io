@@ -147,7 +147,7 @@
 
     function initializeOrbs() {
 
-      var orbTexture = THREE.ImageUtils.loadTexture('textures/objects/orb.png'),
+      var orbTexture = THREE.ImageUtils.loadTexture('textures/objects/alien.png'),
         spriteMaterial = new THREE.SpriteMaterial({
           map: orbTexture,
           color: 0xffffff
@@ -270,7 +270,7 @@
           var dist = orbs.children[i].position.clone().sub(bullets.children[j].position);
 
           // bullseye
-          if (dist.length() < (orbSize + bulletSize)) {
+          if (dist.length() < (orbSize/2 + bulletSize)) {
             orbs.children.splice(i, 1);
             bullets.children.splice(j, 1);
             bulletDirection.splice(j, 1);
@@ -289,9 +289,12 @@
       // add new orb if appropriate
       if (frame % (orbFreq) == 0) {
 
-        orbFreq -= 20;
+        if (orbFreq > 200)
+          orbFreq -= 10;
 
-        var orbTexture = THREE.ImageUtils.loadTexture('textures/objects/orb.png'),
+        console.log(orbFreq);
+
+        var orbTexture = THREE.ImageUtils.loadTexture('textures/objects/alien.png'),
         spriteMaterial = new THREE.SpriteMaterial({
           map: orbTexture,
           color: 0xffffff
