@@ -29,3 +29,19 @@ OR
 #### To win:
 
 <img src="../cardboardgame/textures/objects/alien.png" style="width: 200px;"/>
+
+* Shoot these guys to earn points
+* Alternatively, if they get to you before you kill them, you lose a life
+
+<img src="../cardboardgame/textures/objects/heart.png" style="width: 200px;"/>
+
+* Shooting a heart gives you an extra life
+
+<img src="../cardboardgame/textures/objects/star.png" style="width: 200px;"/>
+
+* Shooting a star powerup doubles the size of your bullets, making it easier to fend off aliens
+
+## Screenshots:
+
+<img src="../assets/img/cardboardscreenshot1.png" style="width: 1000px;"/>
+<img src="../assets/img/cardboardscreenshot2.png" style="width: 1000px;"/>
