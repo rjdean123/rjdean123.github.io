@@ -28,4 +28,4 @@ OR
 
 #### To win:
 
-![Monster Image](../cardboardgame/textures/objects/alien.png =250x250)
+<img src="../cardboardgame/textures/objects/alien.png" style="width: 200px;"/>
