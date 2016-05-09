@@ -20,3 +20,10 @@ OR
 <a href="../cardboardgame/index.html">
 	Test it out here.
 </a>
+
+This game is a first-person turret shooter, loosely inspired by Space Invaders. To play:
+
+# To look around, just look around (pretty straightforward)
+# To shoot, press the button on the Cardboard (or tap the screen)
+![Monster Image]("../cardboardgame/textures/objects/alien.png")
+{: .image-right}
