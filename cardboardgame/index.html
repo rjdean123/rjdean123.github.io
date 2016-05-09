@@ -66,6 +66,14 @@
     var orbSpeed = 1;
     var orbFreq = 1000;
 
+    var hearts = new THREE.Object3D();
+    var heartSize = 50;
+    var heartFreq = 1000;
+
+    var powerups = new THREE.Object3D();
+    var powerupSize = 50;
+    var powerupFreq = 1507;
+
     var bullets = new THREE.Object3D();
     var bulletSize = 5;
     var bulletMaxDist = 700;
@@ -78,7 +86,7 @@
     
     function init() {
       renderer = new THREE.WebGLRenderer();
-      renderer.setClearColor( 0x00FF3C ); // universe color (background color)
+      renderer.setClearColor( 0x00FF3C ); // universe color (background color), green @ start
       element = renderer.domElement;
       container = document.getElementById('example');
       container.appendChild(element);
@@ -243,7 +251,9 @@
 
         var totalTime = clock.getElapsedTime();
 
-        addNewOrbs(totalTime);
+        addNewOrbs();
+        addNewHearts();
+        addNewPowerups();
 
         // update positions of orbs
         for (var i = 0; i < orbs.children.length; i++) {
@@ -261,6 +271,26 @@
             orbs.children[i].position.y += move.y;
             orbs.children[i].position.z += move.z;
           }
+        }
+
+        // update positions of hearts
+        for (var i = 0; i < hearts.children.length; i++) {
+
+          var x = hearts.children[i].position.x;
+          var z = hearts.children[i].position.z;
+
+          hearts.children[i].position.x = x * Math.cos(.001) - z * Math.sin(.001);
+          hearts.children[i].position.z = z * Math.cos(.001) + x * Math.sin(.001);
+        }
+
+        // update positions of powerups
+        for (var i = 0; i < powerups.children.length; i++) {
+
+          var x = powerups.children[i].position.x;
+          var z = powerups.children[i].position.z;
+
+          powerups.children[i].position.x = x * Math.cos(.003) - z * Math.sin(.003);
+          powerups.children[i].position.z = z * Math.cos(.003) + x * Math.sin(.003);
         }
 
         // update positions of bullets
@@ -297,6 +327,39 @@
             }
           }
         }
+
+        // check for bullet - heart collisions
+        for (var i = 0; i < hearts.children.length; i++) {
+          for (var j = 0; j < bullets.children.length; j++) {
+
+            var dist = hearts.children[i].position.clone().sub(bullets.children[j].position);
+
+            // bullseye
+            if (dist.length() < (heartSize/2 + bulletSize)) {
+              hearts.children.splice(i, 1);
+              bullets.children.splice(j, 1);
+              bulletDirection.splice(j, 1);
+              lives++;
+              document.getElementById("HUDlives").innerHTML = "LIVES: " + lives;
+            }
+          }
+        }
+
+        // check for bullet - powerup collisions
+        for (var i = 0; i < powerups.children.length; i++) {
+          for (var j = 0; j < bullets.children.length; j++) {
+
+            var dist = powerups.children[i].position.clone().sub(bullets.children[j].position);
+
+            // bullseye
+            if (dist.length() < (heartSize/2 + bulletSize)) {
+              powerups.children.splice(i, 1);
+              bullets.children.splice(j, 1);
+              bulletDirection.splice(j, 1);
+              bulletSize*=2;
+            }
+          }
+        }
         
       }
 
@@ -304,6 +367,50 @@
 
       update(clock.getDelta());
       render(clock.getDelta());
+    }
+
+    function addNewHearts() {
+
+      if (frame % heartFreq == 0 && hearts.children.length == 0) {
+
+        var heartTexture = THREE.ImageUtils.loadTexture('textures/objects/heart.png'),
+        spriteMaterial = new THREE.SpriteMaterial({
+          map: heartTexture,
+          color: 0xffffff
+        });
+
+        var sprite = new THREE.Sprite(spriteMaterial);
+
+        sprite.scale.set(heartSize, heartSize, heartSize);
+        sprite.position.set(300, 30, 30);
+
+        sprite.material.blending = THREE.AdditiveBlending;
+
+        hearts.add(sprite);
+        scene.add(hearts);
+      }
+    }
+
+    function addNewPowerups() {
+
+      if (frame % powerupFreq == 0 && powerups.children.length == 0 && bulletSize < 40) {
+
+        var powerupTexture = THREE.ImageUtils.loadTexture('textures/objects/star.png'),
+        spriteMaterial = new THREE.SpriteMaterial({
+          map: powerupTexture,
+          color: 0xffffff
+        });
+
+        var sprite = new THREE.Sprite(spriteMaterial);
+
+        sprite.scale.set(powerupSize, powerupSize, powerupSize);
+        sprite.position.set(200, 100, 30);
+
+        sprite.material.blending = THREE.AdditiveBlending;
+
+        powerups.add(sprite);
+        scene.add(powerups);
+      }
     }
 
     function addNewOrbs() {
