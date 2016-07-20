@@ -13,6 +13,11 @@ Shoot me an email for a formal resume.</center>
 * I'm currently working on my undergrad at the University of Virginia. I expect to graduate in May, 2018 with a double major in Computer Science and Economics.
 
 ## Relevant Professional Exeperience
+* United States Department of Defense / Software Development Intern / May 2016 - August 2016
+    * Developed a web application to provide analysts the ability to easily navigate, annotate, and otherwise interact with a large body of data
+        * Utilized the AngularJS framework along with Bootstrap components to create a clean and dynamic user experience
+        * Used the Java Spring framework and MariaDB to handle server requests
+    * Ingested large volumes of raw data into a database using Python and the SQL Alchemy toolkit
 * United States Department of Defense / Software Development Intern / May 2015 - August 2015
 	* Developed and optimized a Java Spring application to automate the analysis of web content
 	* Tailored and deployed a web application to assist the planning and management of work-related travel
